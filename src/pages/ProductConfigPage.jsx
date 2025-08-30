@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Check, Star, ShoppingCart, ArrowLeft } from 'lucide-react';
-import Navigation from '@/components/Navigation';
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { allServicesFlat } from '@/data/servicesData.js';
 import { useCart } from '@/contexts/CartContext';
@@ -144,7 +144,7 @@ const ProductConfigPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navigation />
+      <Navbar />
       
       <main className="flex-grow pt-20">
         <div className="container mx-auto px-6 py-8">
