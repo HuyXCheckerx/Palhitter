@@ -1,48 +1,65 @@
-import { Code, Layers, Bot, Eye, Wrench } from 'lucide-react';
+import { Code } from 'lucide-react';
 
 export const generalToolsData = [
   {
-    id: "palhitter-lite",
-    title: "Palhitter Lite",
+    id: "palhitter",
+    title: "Palhitter",
     category: "General Tools",
     tag: "palchecker",
-    description: "Fastest proxyless paypal checker",
-    fullDescription: "Check paypal accounts with little to no proxy usage, fast and reliable",
-    features: [
-      "Rustbased paypal checker",
-      "Access to bi-daily updates",
-      "Most private apis",
-      "Coded and optimized with Rust, one of the fastest coding language!"
-    ],
-    price: "$129.99 /Weekly",
+    description: "The #1 PayPal Checker with multiple tiers and modules.",
+    fullDescription: "XanaxPal - The #1 PayPal Checker. Logs last 8h->1week, No security lock, Proxyless (PalhitterEX), Daily updates to all apis.",
     image: "/pal1.png",
     image2: "/pal2.png",
     image3: "/pal3.png",
     gradient: "from-green-600 to-teal-700",
     currency: "USD",
-    numericPrice: 129.99
-  },
-  {
-    id: "palhitter-lifetime",
-    title: "Palhitter Pro",
-    category: "General Tools",
-    tag: "palchecker",
-    description: "Fastest proxyless paypal checker",
-    fullDescription: "Check paypal accounts with little to no proxy usage, fast and reliable",
-    features: [
-      "Access to exploited auto hitter",
-      "Rustbased paypal checker",
-      "Access to bi-daily updates",
-      "Most private apis",
-      "Coded and optimized with Rust, one of the fastest coding language!"
-    ],
-    price: "$329.99 /Lifetime",
-    image: "/pal1.png",
-    image2: "/pal2.png",
-    image3: "/pal3.png",
-    gradient: "from-green-600 to-teal-700",
-    currency: "USD",
-    numericPrice: 329.99
+    tiers: [
+      {
+        id: "palhitter-lite",
+        name: "Palhitter LITE",
+        ui: "Legacy UI",
+        features: [
+          "Brute API#1: capture email:pass|[country] (5-8k CPM, *NEEDS SOLVER)",
+          "Valid Mail: 20k CPM (Captchaless)",
+          "Legacy cmd UI"
+        ],
+        options: [
+          { name: "Monthly", price: 349, numericPrice: 349 },
+          { name: "Lifetime", price: 799, numericPrice: 799 }
+        ]
+      },
+      {
+        id: "palhitter-mid",
+        name: "Palhitter MID",
+        ui: "Legacy UI",
+        features: [
+          "Brute API#1: capture email:pass|[country] (5-8k CPM, *NEEDS SOLVER)",
+          "Brute API#2: capture email:pass|[country]|[CC]|[BANK]|[PHONE] (8-9k CPM, *NEEDS SOLVER)",
+          "Valid Mail: 20k CPM (Captchaless)",
+          "Legacy cmd UI"
+        ],
+        options: [
+          { name: "Monthly", price: 449, numericPrice: 449 },
+          { name: "Lifetime", price: 899, numericPrice: 899 }
+        ]
+      },
+      {
+        id: "palhitter-ex",
+        name: "Palhitter EX",
+        ui: "Webapp UI",
+        features: [
+          "Brute API#1 & API#2",
+          "Brute API#3: capture email:pass|[country]|[CC]|[BANK]|[PHONE]:cookies (9-13k CPM, PROXYLESS + CAPTCHALESS)",
+          "ValidMail",
+          "Paypal gateway autohitter",
+          "Modern WEBAPP UI"
+        ],
+        options: [
+          { name: "Monthly", price: 1049, numericPrice: 1049 },
+          { name: "Lifetime", price: 2799, numericPrice: 2799 }
+        ]
+      }
+    ]
   }
 ];
 
