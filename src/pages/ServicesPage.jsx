@@ -18,18 +18,18 @@ const ServicesPage = ({ variants, transition }) => {
   const { toast } = useToast();
   const { addToCart } = useCart();
 
+  const [step, setStep] = useState(1);
   const [selectedTier, setSelectedTier] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const service = allServicesFlat.find(s => s.id === serviceId);
 
   useEffect(() => {
-    if (service && service.tiers) {
-      const initialTier = service.tiers[0];
-      setSelectedTier(initialTier);
-      setSelectedOption(initialTier.options[0]);
-    }
-  }, [service]);
+    // Reset state when service changes
+    setStep(1);
+    setSelectedTier(null);
+    setSelectedOption(null);
+  }, [serviceId]);
 
   const handleAddToCart = () => {
     if (!service || !selectedTier || !selectedOption) return;
@@ -53,6 +53,30 @@ const ServicesPage = ({ variants, transition }) => {
     });
   };
 
+  const ProgressIndicator = () => (
+    <div className="w-full mb-12">
+      <div className="flex justify-between items-center relative">
+        <div className="absolute left-0 top-1/2 w-full h-0.5 bg-border -translate-y-1/2"></div>
+        <div 
+          className="absolute left-0 top-1/2 h-0.5 bg-primary -translate-y-1/2 transition-all duration-500 ease-in-out"
+          style={{ width: `${((step - 1) / 2) * 100}%` }}
+        ></div>
+        {[1, 2, 3].map(s => (
+          <div key={s} className="relative z-10 flex flex-col items-center">
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${step >= s ? 'bg-primary text-primary-foreground' : 'bg-card border-2 border-border text-foreground/60'}`}>
+              {step > s ? <CheckCircle size={18} /> : s}
+            </div>
+            <span className={`mt-2 text-xs font-orbitron-specific transition-colors duration-300 ${step >= s ? 'text-primary' : 'text-foreground/60'}`}>
+              {s === 1 && 'TIER'}
+              {s === 2 && 'PLAN'}
+              {s === 3 && 'CONFIRM'}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   if (serviceId) {
     if (!service) {
       return (
@@ -75,7 +99,7 @@ const ServicesPage = ({ variants, transition }) => {
 
     return (
       <motion.div 
-        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40"
         initial="initial" animate="in" exit="out" variants={variants} transition={transition}
       >
         <div className="mb-10">
@@ -87,107 +111,81 @@ const ServicesPage = ({ variants, transition }) => {
           </Link>
         </div>
         
-        <div className="bg-card p-8 md:p-12 rounded-2xl shadow-2xl border border-border/60">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
-            <motion.div 
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'circOut' }}
-            >
-              <img 
-                src={service.image} 
-                alt={service.title}
-                className="w-full h-auto object-cover rounded-xl shadow-xl aspect-video border border-border/40 mb-4"
-              />
-               <img 
-                src={service.image2} 
-                alt={service.title}
-                className="w-full h-auto object-cover rounded-xl shadow-xl aspect-video border border-border/40 mb-4"
-              />
-               <img 
-                src={service.image3} 
-                alt={service.title}
-                className="w-30 h-30 object-cover rounded-xl shadow-xl aspect-video border border-border/40"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'circOut', delay: 0.15 }}
-            >
+        <div className="grid lg:grid-cols-5 gap-12">
+          {/* Left Side: Image Gallery */}
+          <motion.div className="lg:col-span-2" initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: 'circOut' }}>
+            <div className="space-y-4 sticky top-32">
               <h1 className="text-4xl md:text-5xl font-bold mb-3 gradient-text tracking-tight title-animate">{service.title}</h1>
-              <p className="text-lg text-foreground/80 mb-6 font-roboto-mono leading-relaxed">{service.fullDescription || service.description}</p>
-              
-              {service.tiers && selectedTier && selectedOption && (
-                <>
-                  <div className="mb-6">
-                    <h3 className="text-xl font-semibold mb-3 font-orbitron-specific">Select Tier:</h3>
-                    <div className="flex flex-wrap gap-3">
-                      {service.tiers.map(tier => (
-                        <Button key={tier.id} variant={selectedTier.id === tier.id ? 'default' : 'outline'} onClick={() => { setSelectedTier(tier); setSelectedOption(tier.options[0]); }}>
-                          {tier.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mb-8">
-                    <h3 className="text-xl font-semibold mb-3 font-orbitron-specific">Select Plan:</h3>
-                    <div className="flex flex-wrap gap-3">
-                      {selectedTier.options.map(option => (
-                        <Button key={option.name} variant={selectedOption.name === option.name ? 'default' : 'outline'} onClick={() => setSelectedOption(option)}>
-                          {option.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <span className={`text-3xl font-bold bg-gradient-to-r ${service.gradient || 'from-primary to-accent'} bg-clip-text text-transparent mb-8 block font-minecraft`}>
-                    ${selectedOption.price.toFixed(2)}
-                  </span>
-                </>
-              )}
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-primary to-accent hover:opacity-95 text-primary-foreground px-8 py-7 rounded-lg text-base shadow-lg font-orbitron-specific tracking-wider"
-                  onClick={handleAddToCart}
-                >
-                  <ShoppingCart className="mr-3" size={22} /> Add to Cart
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-primary border-primary hover:bg-primary/10 hover:text-primary px-8 py-7 rounded-lg text-base font-orbitron-specific tracking-wider"
-                   onClick={() => toast({ title: "Inquiry", description: "Contact @pillowware on Telegram for more details."})}
-                >
-                  <MessageSquare className="mr-3" size={22} /> Inquire
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-
-          {selectedTier && (
-            <div className="mt-16 pt-10 border-t border-border/40">
-              <h2 className="text-3xl font-semibold text-foreground mb-8 title-animate">{selectedTier.name} Features</h2>
-              <ul className="space-y-4 text-lg">
-                {selectedTier.features.map((feature, idx) => (
-                  <motion.li 
-                    key={idx} 
-                    className="flex items-start space-x-3.5"
-                    initial={{ opacity: 0, x: -25 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1, ease: 'circOut' }}
-                  >
-                    <CheckCircle className="text-green-400 mt-1.5 flex-shrink-0" size={22} />
-                    <span className="text-foreground/80 font-roboto-mono">{feature}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <p className="text-md text-foreground/70 mb-6 font-roboto-mono leading-relaxed">{service.description}</p>
+              <img src={service.image} alt={service.title} className="w-full h-auto object-cover rounded-xl shadow-xl aspect-video border border-border/40" />
+              <img src={service.image2} alt={service.title} className="w-full h-auto object-cover rounded-xl shadow-xl aspect-video border border-border/40" />
+              <img src={service.image3} alt={service.title} className="w-full h-auto object-cover rounded-xl shadow-xl aspect-video border border-border/40" />
             </div>
-          )}
+          </motion.div>
+
+          {/* Right Side: Configuration Steps */}
+          <motion.div className="lg:col-span-3 bg-card p-8 md:p-12 rounded-2xl shadow-2xl border border-border/60" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: 'circOut', delay: 0.15 }}>
+            <ProgressIndicator />
+
+            {/* Step 1: Select Tier */}
+            {step === 1 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                <h2 className="text-2xl font-bold mb-6 text-center">Step 1: Choose Your Tier</h2>
+                <div className="space-y-5">
+                  {service.tiers.map(tier => (
+                    <div key={tier.id} onClick={() => { setSelectedTier(tier); setSelectedOption(tier.options[0]); setStep(2); }} className="p-6 border-2 border-border hover:border-primary rounded-lg cursor-pointer transition-all duration-300">
+                      <h3 className="text-xl font-bold text-primary font-orbitron-specific">{tier.name}</h3>
+                      <p className="text-foreground/80 mt-2 font-roboto-mono text-sm">{tier.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Step 2: Select Plan */}
+            {step === 2 && selectedTier && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                <h2 className="text-2xl font-bold mb-2 text-center">Step 2: Setup Your Plan</h2>
+                <p className="text-center text-foreground/60 mb-8">You've selected the <span className="text-primary font-semibold">{selectedTier.name}</span> tier.</p>
+                <div className="space-y-4 mb-8">
+                  {selectedTier.options.map(option => (
+                    <div key={option.name} onClick={() => setSelectedOption(option)} className={`p-5 border-2 rounded-lg cursor-pointer transition-all duration-300 flex justify-between items-center ${selectedOption?.name === option.name ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/70'}`}>
+                      <span className="text-lg font-semibold font-orbitron-specific">{option.name}</span>
+                      <span className="text-2xl font-bold font-minecraft">${option.price.toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button size="lg" className="w-full py-6" onClick={() => setStep(3)}>Next: Confirm Selection</Button>
+                <Button variant="ghost" className="w-full mt-3" onClick={() => setStep(1)}>Back to Tiers</Button>
+              </motion.div>
+            )}
+
+            {/* Step 3: Confirm & Add to Cart */}
+            {step === 3 && selectedTier && selectedOption && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                <h2 className="text-2xl font-bold mb-6 text-center">Step 3: Review & Proceed</h2>
+                <div className="bg-background/50 p-6 rounded-lg border border-border mb-8 space-y-5">
+                  <div>
+                    <h4 className="text-sm text-foreground/60 font-orbitron-specific">TIER</h4>
+                    <p className="text-xl font-semibold text-primary">{selectedTier.name}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm text-foreground/60 font-orbitron-specific">PLAN</h4>
+                    <p className="text-xl font-semibold text-primary">{selectedOption.name}</p>
+                  </div>
+                  <div className="pt-4 border-t border-border">
+                    <h4 className="text-sm text-foreground/60 font-orbitron-specific">TOTAL PRICE</h4>
+                    <p className={`text-4xl font-bold bg-gradient-to-r ${service.gradient || 'from-primary to-accent'} bg-clip-text text-transparent font-minecraft`}>${selectedOption.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                <Button size="lg" className="w-full py-7 text-lg" onClick={handleAddToCart}>
+                  <ShoppingCart className="mr-3" size={22} /> Add to Cart & Proceed
+                </Button>
+                <Button variant="ghost" className="w-full mt-3" onClick={() => setStep(2)}>Back to Plans</Button>
+              </motion.div>
+            )}
+
+          </motion.div>
         </div>
       </motion.div>
     );

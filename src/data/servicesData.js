@@ -6,7 +6,7 @@ export const generalToolsData = [
     title: "Palhitter",
     category: "General Tools",
     tag: "palchecker",
-    description: "The #1 PayPal Checker with multiple tiers and modules.",
+    description: 'Palhitter is a high-performance PayPal account validation service designed to secure and streamline your payment operations. Choose from three distinct tiers, each tailored to meet specific demands—from individual freelance use to large-scale enterprise solutions. Enhance your efficiency, minimize risk, and scale with confidence.',
     fullDescription: "XanaxPal - The #1 PayPal Checker. Logs last 8h->1week, No security lock, Proxyless (PalhitterEX), Daily updates to all apis.",
     image: "/pal1.png",
     image2: "/pal2.png",
@@ -17,6 +17,7 @@ export const generalToolsData = [
       {
         id: "palhitter-lite",
         name: "Palhitter LITE",
+        description: 'Essential Toolkit for Individuals: Perfect for freelancers and small-scale users, the LITE tier provides our core high-performance validation engine. Get started with essential features to ensure your payment processes are secure and efficient.',
         ui: "Legacy UI",
         features: [
           "Brute API#1: capture email:pass|[country] (5-8k CPM, *NEEDS SOLVER)",
@@ -31,6 +32,7 @@ export const generalToolsData = [
       {
         id: "palhitter-mid",
         name: "Palhitter MID",
+        description: 'Advanced Suite for Growing Businesses: Engineered for professionals and expanding teams who demand more power and flexibility. Benefit from significantly higher transaction limits, priority processing, and access to advanced analytics to optimize your operations.',
         ui: "Legacy UI",
         features: [
           "Brute API#1: capture email:pass|[country] (5-8k CPM, *NEEDS SOLVER)",
@@ -46,6 +48,7 @@ export const generalToolsData = [
       {
         id: "palhitter-ex",
         name: "Palhitter EX",
+        description: 'Ultimate Enterprise Solution: Our premier EX tier delivers unparalleled performance for large-scale enterprises. Experience the full potential of Palhitter with unlimited access, dedicated enterprise-grade support, and exclusive API access for seamless integration.',
         ui: "Webapp UI",
         features: [
           "Brute API#1 & API#2",
