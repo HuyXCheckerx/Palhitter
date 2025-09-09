@@ -9,9 +9,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HomePage from '@/pages/HomePage';
 import ServicesPage from '@/pages/ServicesPage';
-import TermsPage from '@/pages/TermsPage';
-import VouchesPage from '@/pages/VouchesPage';
-import UptimePage from '@/pages/UptimePage';
 import CheckoutPage from '@/pages/CheckoutPage';
 import PaymentPage from '@/pages/PaymentPage';
 import PaymentStatusPage from '@/pages/PaymentStatusPage';
@@ -70,28 +67,6 @@ const App = () => {
       label: 'Services',
       onClick: () => navigate('/services'),
     },
-    {
-      icon: <VscStarFull size={24} />,
-      label: 'Vouches',
-      onClick: () => navigate('/vouches'),
-    },
-    {
-      icon: <VscGraphLine size={24} />,
-      label: 'Uptime',
-      onClick: () => navigate('/uptime'),
-    },
-    {
-      icon: <VscLaw size={24} />,
-      label: 'Terms',
-      onClick: () => navigate('/terms'),
-    },
-    {
-      icon: <MdOutlineShoppingCartCheckout size={24} />,
-      label: 'Checkout',
-      onClick: () => navigate('/checkout'),
-    },
-
-    
   ];
 
   return (
@@ -105,9 +80,6 @@ const App = () => {
           <Route path="/" element={<HomePage variants={pageVariants} transition={pageTransition} />} />
           <Route path="/services" element={<ServicesPage variants={pageVariants} transition={pageTransition} />} />
           <Route path="/services/:serviceId" element={<ServicesPage variants={pageVariants} transition={pageTransition} />} />
-          <Route path="/terms" element={<TermsPage variants={pageVariants} transition={pageTransition} />} />
-          <Route path="/vouches" element={<VouchesPage variants={pageVariants} transition={pageTransition} />} />
-          <Route path="/uptime" element={<UptimePage variants={pageVariants} transition={pageTransition} />} />
           <Route path="/checkout" element={<CheckoutPage variants={pageVariants} transition={pageTransition} />} />
           <Route path="/payment" element={<PaymentPage variants={pageVariants} transition={pageTransition} />} />
           <Route path="/payment-status" element={<PaymentStatusPage variants={pageVariants} transition={pageTransition} />} />

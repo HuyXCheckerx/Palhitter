@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import ServiceCard from '@/components/ServiceCard';
 import { allServicesFlat, serviceCategories } from '@/data/servicesData';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import { useCart } from '@/contexts/CartContext';
 const ServicesPage = ({ variants, transition }) => {
   const params = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const categoryId = queryParams.get('category');
 
@@ -113,7 +114,15 @@ const ServicesPage = ({ variants, transition }) => {
                 {service.price} {service.currency === 'SOL' && service.price.toLowerCase() !== 'contact for quote' && <span className="text-xl"> SOL</span>}
               </span>
               <div className="flex flex-col sm:flex-row gap-4">
-                {!isContactForPrice && typeof service.numericPrice === 'number' ? (
+                {service.hasCustomization ? (
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-to-r from-primary to-accent hover:opacity-95 text-primary-foreground px-8 py-7 rounded-lg text-base shadow-lg font-orbitron-specific tracking-wider"
+                    onClick={() => navigate(`/product/${service.id}`)}
+                  >
+                    <ShoppingCart className="mr-3" size={22} /> CUSTOMIZE
+                  </Button>
+                ) : !isContactForPrice && typeof service.numericPrice === 'number' ? (
                   <Button 
                     size="lg" 
                     className="bg-gradient-to-r from-primary to-accent hover:opacity-95 text-primary-foreground px-8 py-7 rounded-lg text-base shadow-lg font-orbitron-specific tracking-wider"

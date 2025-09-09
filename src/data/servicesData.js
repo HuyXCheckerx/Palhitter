@@ -2,47 +2,27 @@ import { Code, Layers, Bot, Eye, Wrench } from 'lucide-react';
 
 export const generalToolsData = [
   {
-    id: "palhitter-lite",
-    title: "Palhitter Lite",
+    id: "palhitter",
+    title: "PalHitter",
     category: "General Tools",
     tag: "palchecker",
     description: "Fastest proxyless paypal checker",
-    fullDescription: "Check paypal accounts with little to no proxy usage, fast and reliable",
+    fullDescription: "Check paypal accounts with little to no proxy usage, fast and reliable. Choose from multiple tiers to fit your needs.",
     features: [
       "Rustbased paypal checker",
       "Access to bi-daily updates",
       "Most private apis",
+      "Multiple pricing tiers available",
       "Coded and optimized with Rust, one of the fastest coding language!"
     ],
-    price: "$129.99 /Weekly",
+    price: "Starting at $29",
     image: "/pal1.png",
     image2: "/pal2.png",
     image3: "/pal3.png",
     gradient: "from-green-600 to-teal-700",
     currency: "USD",
-    numericPrice: 129.99
-  },
-  {
-    id: "palhitter-lifetime",
-    title: "Palhitter Pro",
-    category: "General Tools",
-    tag: "palchecker",
-    description: "Fastest proxyless paypal checker",
-    fullDescription: "Check paypal accounts with little to no proxy usage, fast and reliable",
-    features: [
-      "Access to exploited auto hitter",
-      "Rustbased paypal checker",
-      "Access to bi-daily updates",
-      "Most private apis",
-      "Coded and optimized with Rust, one of the fastest coding language!"
-    ],
-    price: "$329.99 /Lifetime",
-    image: "/pal1.png",
-    image2: "/pal2.png",
-    image3: "/pal3.png",
-    gradient: "from-green-600 to-teal-700",
-    currency: "USD",
-    numericPrice: 329.99
+    numericPrice: 29,
+    hasCustomization: true
   }
 ];
 

@@ -15,9 +15,6 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Services', path: '/services', icon: ListTree },
-    { name: 'Vouches', path: '/vouches', icon: Award },
-    { name: 'Uptime', path: '/uptime', icon: BarChart3 },
-    { name: 'Terms', path: '/terms', icon: FileText },
   ];
 
   const handleContactClick = () => {

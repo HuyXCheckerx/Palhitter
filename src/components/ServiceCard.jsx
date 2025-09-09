@@ -55,7 +55,7 @@ const ServiceCard = ({ service, onAddToCart, isHomepageCard = false }) => {
             {service.price}
           </span>
           {onAddToCart && !isHomepageCard && !isContactForPrice && (
-                        <Button 
+            <Button 
               variant="outline"
               size="sm"
               onClick={(e) => { e.preventDefault(); navigate(`/product/${service.id}`); }}
